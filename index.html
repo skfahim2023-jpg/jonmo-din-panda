@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Birthday.exe 💀</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ color:white;
+ font-family:Arial,sans-serif;
+ text-align:center;
+ min-height:100vh;
+ background:
+ linear-gradient(rgba(0,0,0,.48),rgba(0,0,0,.78)),
+ url("./friend.jpg") center 30% / cover fixed no-repeat;
+}
+
+.screen{
+ position:relative;
+ z-index:1;
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+}
+
+.card{
+ width:100%;
+ max-width:520px;
+ padding:30px 22px;
+ background:rgba(15,10,10,.82);
+ border:1px solid #ff1744;
+ border-radius:20px;
+ box-shadow:0 0 35px #ff174455;
+ backdrop-filter:blur(5px);
+}
+
+h1{color:#ff3158}
+
+input{
+ width:100%;
+ padding:15px;
+ margin:10px 0;
+ border:1px solid #555;
+ border-radius:10px;
+ background:#222;
+ color:white;
+ font-size:17px;
+}
+
+button{
+ background:#ff1744;
+ color:white;
+ border:0;
+ border-radius:10px;
+ padding:14px 22px;
+ font-size:17px;
+ font-weight:bold;
+ cursor:pointer;
+ margin:10px;
+ transition:.3s;
+}
+
+button:hover{
+ transform:scale(1.06);
+ background:#ff4770;
+}
+
+.hidden{display:none!important}
+
+#terminal{
+ color:#00ff78;
+ font-family:monospace;
+ font-size:16px;
+ line-height:2;
+ overflow-wrap:anywhere;
+}
+
+.glow{animation:glow 1s infinite alternate}
+
+@keyframes glow{
+ from{text-shadow:0 0 5px red}
+ to{text-shadow:0 0 25px red}
+}
+
+.big{
+ font-size:75px;
+ animation:bounce 1s infinite;
+}
+
+@keyframes bounce{
+ 50%{transform:translateY(-15px) rotate(8deg)}
+}
+
+.message{
+ font-size:19px;
+ line-height:1.7;
+}
+
+#confetti{
+ position:fixed;
+ inset:0;
+ width:100%;
+ height:100%;
+ pointer-events:none;
+ z-index:5;
+}
+
+@media(max-width:500px){
+ .card{padding:25px 15px}
+ h1{font-size:27px}
+ .message{font-size:17px}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<section class="screen" id="inputScreen">
+<div class="card">
+<h1>☠️ BIRTHDAY.EXE</h1>
+<h2>VICTIM REGISTRATION</h2>
+<p>আজ একজন নিরীহ মানুষের জীবন শেষ হতে যাচ্ছে! 💀</p>
+
+<input id="friend" placeholder="Victim's Name 😎">
+<input id="age" type="number" placeholder="Current Age">
+
+<button onclick="begin()">INITIATE OPERATION ☠️</button>
+</div>
+</section>
+
+<section class="screen hidden" id="hackScreen">
+<div class="card">
+<h1 class="glow">SYSTEM BREACHED!</h1>
+<div id="terminal"></div>
+</div>
+</section>
+
+<section class="screen hidden" id="roastScreen">
+<div class="card">
+<div class="big">🤡</div>
+<h1 id="title"></h1>
+<h2 id="ageTitle"></h2>
+<p class="message" id="roast"></p>
+<button onclick="nextRoast()">NEXT ATTACK 💀</button>
+</div>
+</section>
+
+<section class="screen hidden" id="finalScreen">
+<div class="card">
+<h1 class="glow">HAPPY BIRTHDAY!!!</h1>
+
+<div style="font-size:90px">🎂</div>
+
+<h2 id="finalName"></h2>
+
+<p class="message">
+তুই পাগল! <br>
+meye dekha bondho kore dao
+</p>
+
+<h2>এবার Treat দে কিপটা! </h2>
+
+<p>Friendship officially renewed! </p>
+
+<button onclick="location.reload()">REPLAY 🔄</button>
+</div>
+</section>
+
+<script>
+
+let name,age,step=0;
+
+const roasts=[
+"manush ho sala! ☠️",
+"তোর Brain এখনো Loading... 💀",
+"তোর মতো Piece of Disaster আর একটাই! ",
+"এই বয়সেও Maturity খুঁজে পাওয়া গেল না! "
+];
+
+function show(id){
+ document.querySelectorAll(".screen")
+ .forEach(s=>s.classList.add("hidden"));
+
+ document.getElementById(id)
+ .classList.remove("hidden");
+}
+
+function begin(){
+
+ name=document.getElementById("friend").value.trim();
+ age=Number(document.getElementById("age").value);
+
+ if(!name || !age || age<1){
+  alert("Name আর Age ঠিকভাবে দে ভাই! 😂");
+  return;
+ }
+
+ step=0;
+
+ show("hackScreen");
+
+ let lines=[
+ "> Initializing birthday.exe...",
+ "> Scanning victim...",
+ "> Victim identified: "+name,
+ "> Calculating brain cells...",
+ "> Brain cells found: ERROR 404",
+ "> Age detected: "+age,
+ "> Preparing maximum roast...",
+ "> OPERATION SUCCESSFUL ☠️"
+ ];
+
+ let terminal=document.getElementById("terminal");
+ terminal.innerHTML="";
+
+ let i=0;
+
+ function type(){
+
+  if(i<lines.length){
+
+   terminal.appendChild(
+    document.createTextNode(lines[i])
+   );
+
+   terminal.appendChild(
+    document.createElement("br")
+   );
+
+   i++;
+
+   setTimeout(type,800);
+
+  }else{
+   setTimeout(showRoast,1000);
+  }
+ }
+
+ type();
+}
+
+function showRoast(){
+
+ show("roastScreen");
+
+ document.getElementById("title").innerText=
+ "HAPPY BIRTHDAY "+name+"! 🎉";
+
+ document.getElementById("ageTitle").innerText=
+ "AGE: "+age+" YEARS OLD 👴";
+
+ document.getElementById("roast").innerText=
+ roasts[step];
+
+ launchConfetti();
+}
+
+function nextRoast(){
+
+ step++;
+
+ if(step<roasts.length){
+
+  document.getElementById("roast").innerText=
+  roasts[step];
+
+ }else{
+
+  show("finalScreen");
+
+  document.getElementById("finalName").innerText=
+  "Dear "+name+" ❤️";
+
+  launchConfetti();
+ }
+}
+
+function launchConfetti(){
+
+ const canvas=document.getElementById("confetti");
+ const ctx=canvas.getContext("2d");
+
+ canvas.width=innerWidth;
+ canvas.height=innerHeight;
+
+ let pieces=Array.from({length:120},()=>({
+  x:Math.random()*canvas.width,
+  y:Math.random()*canvas.height,
+  size:Math.random()*8+3,
+  speed:Math.random()*4+2
+ }));
+
+ let frames=0;
+
+ function draw(){
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  pieces.forEach(p=>{
+
+   ctx.fillStyle=
+   `hsl(${Math.random()*360},100%,60%)`;
+
+   ctx.fillRect(p.x,p.y,p.size,p.size);
+
+   p.y+=p.speed;
+
+   if(p.y>canvas.height){
+    p.y=-10;
+    p.x=Math.random()*canvas.width;
+   }
+
+  });
+
+  if(++frames<600){
+   requestAnimationFrame(draw);
+  }else{
+   ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+ }
+
+ draw();
+}
+
+window.addEventListener("resize",()=>{
+ const canvas=document.getElementById("confetti");
+ canvas.width=innerWidth;
+ canvas.height=innerHeight;
+});
+
+</script>
+
+</body>
+</html>
